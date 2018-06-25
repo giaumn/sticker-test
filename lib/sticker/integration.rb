@@ -1,7 +1,11 @@
-require "sticker/integration/version"
+require 'sticker/jwt_util'
+require 'sticker/integration/configuration'
+require 'sticker/integration/metadata'
 
 module Sticker
   module Integration
-    # Your code goes here...
+    class Api < ::Rails::Engine
+      isolate_namespace Sticker
+    end
   end
 end

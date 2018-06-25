@@ -19,6 +19,11 @@ And then execute:
 Or install it yourself as:
 
     $ gem install sticker-integration
+    
+Mount routes in config/routes.rb:
+
+    mount Sticker::Integration::Api, at: 'stickers'
+    
 
 ## Usage
 
