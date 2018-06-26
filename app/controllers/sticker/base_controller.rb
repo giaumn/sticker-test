@@ -5,7 +5,11 @@ module Sticker
 
     protect_from_forgery with: :null_session
 
-    before_action :authorize, except: [:access_token]
+    if Rails.version.to_i > 3
+      before_action :authorize, except: [:access_token]
+    else
+      before_filter :authorize, except: [:access_token]
+    end
 
     attr_reader :current_user
 
@@ -28,7 +32,7 @@ module Sticker
           return render status: :bad_request, json: { message: 'Authorization is invalid' } if decoded_payload.blank?
           @current_user = StickerMethods.find_to_authenticate(decoded_payload)
           render status: :unauthorized, json: { message: 'User not found' } unless @current_user
-        rescue JWT::ExpiredSignature
+        rescue
           render status: :unauthorized, json: { message: 'Session has expired' }
         end
       else
