@@ -1,4 +1,5 @@
 require 'sticker/jwt_util'
+require 'sticker/sticker_methods'
 require 'sticker/integration/configuration'
 require 'sticker/integration/metadata'
 
