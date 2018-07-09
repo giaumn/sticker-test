@@ -8,7 +8,7 @@ module Sticker
         payload[:iss] = Sticker::Integration::AUTHOR
         payload[:jti] = SecureRandom.base64
         payload[:iat] = Time.now.utc
-        payload[:sub] = 'Sticker backend access token'
+        payload[:sub] = 'Sticker server access token'
         JWT.encode(payload, Sticker::Integration.configuration.api_secret)
       end
 
