@@ -7,12 +7,7 @@ module Sticker
     end
 
     def purchase
-      purchase_info = StickerMethods.purchase_collection(params)
-      if purchase_info[:errors].count == 0
-        render status: :ok, json: purchase_info
-      else
-        render status: :unprocessable_entity, json: { message: purchase_info[:errors][0]}
-      end
+      render status: :ok, nothing: true
     end
 
     private

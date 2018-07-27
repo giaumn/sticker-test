@@ -14,10 +14,10 @@ module Sticker
     attr_reader :current_user
 
     def access_token
-      found_user = StickerMethods.verify_authentication(params)
+      found_user = StickerMethods.verify_user(params)
       return render status: :unauthorized, json: { message: 'User is not found' } if found_user.blank?
 
-      payload_data = StickerMethods.generate_token_payload(found_user)
+      payload_data = {user: found_user.as_json(only: [:id])}
       access_token = JwtUtil.encode(payload_data)
       render status: :ok, json: { access_token: access_token, api_key: Integration.configuration.api_key }
     end
