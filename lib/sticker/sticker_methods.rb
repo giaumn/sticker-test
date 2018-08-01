@@ -5,7 +5,11 @@ module Sticker
     end
 
     def self.find_user(data = {})
-      raise 'Need to be implemented by installed source'
+      return if data[:params].blank?
+      user_class = 'User'.constantize
+      user_class.find_by_id(data[:params][:userId])
+    rescue
+      nil
     end
   end
 end

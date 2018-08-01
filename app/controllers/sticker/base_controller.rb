@@ -14,7 +14,7 @@ module Sticker
     attr_reader :current_user
 
     def access_token
-      found_user = StickerMethods.verify_user(params)
+      found_user = StickerMethods.verify_user({params: params, request: request})
       return render status: :unauthorized, json: { message: 'User is not found' } if found_user.blank?
 
       payload_data = {user: found_user.as_json(only: [:id])}
@@ -29,6 +29,8 @@ module Sticker
         access_token = request.headers['Authorization'].split(' ').last
         begin
           JwtUtil.decode(access_token)
+          @current_user = StickerMethods.find_user({params: params, request: request})
+          render status: :not_found, json: { message: 'User not found' } unless @current_user
         rescue
           render status: :unauthorized, json: { message: 'Unauthorized access' }
         end
